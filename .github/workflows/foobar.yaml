@@ -5,6 +5,8 @@ name: foobar
 on:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'foobar/**'
 
   workflow_dispatch:
 
