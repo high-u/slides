@@ -148,6 +148,10 @@ curl --request POST \
 ## Add Github Actions
 
 ```bash
+SLIDE_NAME=<slide_name>
+```
+
+```bash
 ACTION_YAML=$(cat << EOS
 name: ${SLIDE_NAME}
 
@@ -179,4 +183,3 @@ EOS
 
 echo ${ACTION_YAML} > ./.github/workflows/${SLIDE_NAME}.yaml
 ```
-
