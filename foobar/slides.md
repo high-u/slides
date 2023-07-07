@@ -15,7 +15,7 @@ transition: slide-left
 title: Welcome to Slidev
 ---
 
-# Welcome to Slidev
+# Welcome!
 
 Presentation slides for developers
 
