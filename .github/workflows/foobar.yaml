@@ -18,10 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run a one-line script
-        run: echo Hello, world! ${{ secrets.TEST }}
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Deploy
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: https://api.cloudflare.com/client/v4/accounts/${{ secrets.ACCOUNT_IDENTIFIER }}/pages/projects/slides/deployments
+          method: 'POST'
+          customHeaders: "{\"Content-Type\": \"multipart/form-data\", \"X-Auth-Email\": \"${{ secrets.X_AUTH_EMAIL }}\", \"Authorization\": \"Bearer ${secrets.API_TOKEN}\"}"
+          data: 'branch=main'
