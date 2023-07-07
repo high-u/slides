@@ -1,5 +1,5 @@
 {
-  "name": "slides",
+  "name": "foobar",
   "private": true,
   "scripts": {
     "build": "slidev build",
