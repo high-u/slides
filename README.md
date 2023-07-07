@@ -94,8 +94,8 @@ DATA=`cat << EOS
     "production_branch": "main",
     "pr_comments_enabled": true,
     "deployments_enabled": true,
-    "production_deployments_enabled": true,
-    "preview_deployment_setting": "all",
+    "production_deployments_enabled": false,
+    "preview_deployment_setting": "none",
     "preview_branch_includes": [
       "*"
     ],
@@ -143,5 +143,40 @@ curl --request POST \
 --header 'X-Auth-Email: ${X_AUTH_EMAIL}' \
 --header "Authorization: Bearer ${API_TOKEN}" \
 --data ${DATA}
+```
+
+## Add Github Actions
+
+```bash
+ACTION_YAML=$(cat << EOS
+name: ${SLIDE_NAME}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ${SLIDE_NAME}/**
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: https://api.cloudflare.com/client/v4/accounts/\${{ secrets.ACCOUNT_IDENTIFIER }}/pages/projects/slides-${SLIDE_NAME}/deployments
+          method: 'POST'
+          customHeaders: "{\"Content-Type\": \"multipart/form-data\", \"X-Auth-Email\": \"\${{ secrets.X_AUTH_EMAIL }}\", \"Authorization\": \"Bearer \${{ secrets.API_TOKEN }}\"}"
+          data: 'branch=main'
+EOS
+)
+
+echo ${ACTION_YAML} > ./.github/workflows/${SLIDE_NAME}.yaml
 ```
 
