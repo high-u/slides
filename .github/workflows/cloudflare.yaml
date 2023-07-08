@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - ${{ inputs.tag }}/**
+      - foobar/**
 
   workflow_dispatch:
 
@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ${{ inputs.tag }}
+        working-directory: foobar
 
     steps:
       - uses: actions/checkout@v3
