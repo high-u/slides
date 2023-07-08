@@ -2,7 +2,7 @@
   "name": "foobar",
   "private": true,
   "scripts": {
-    "build": "slidev build",
+    "build": "slidev build --base /foobar/ --out ../public/foobar",
     "dev": "slidev --open",
     "export": "slidev export"
   },
