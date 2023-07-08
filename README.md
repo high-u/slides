@@ -17,6 +17,7 @@ fi
 ```bash
 git switch main && git fetch
 git branch ${SLIDE_NAME}
+git switch ${SLIDE_NAME}
 ```
 
 ```bash
