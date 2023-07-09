@@ -1,0 +1,25 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - public/**
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: https://api.cloudflare.com/client/v4/accounts/\${{ secrets.ACCOUNT_IDENTIFIER }}/pages/projects/slides/deployments
+          method: 'POST'
+          customHeaders: "{\"Content-Type\": \"multipart/form-data\", \"X-Auth-Email\": \"\${{ secrets.X_AUTH_EMAIL }}\", \"Authorization\": \"Bearer \${{ secrets.API_TOKEN }}\"}"
+          data: 'branch=main'
